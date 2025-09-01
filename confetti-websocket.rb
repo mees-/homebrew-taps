@@ -4,7 +4,7 @@ class ConfettiWebsocket < Formula
   version "0.0.2"
   license "MIT"
 
-  depends_on "bun"
+  depends_on "oven-sh/bun/bun"
 
   # Use the source code repository
   url "https://github.com/mees-/confetti-webhook/archive/refs/tags/v0.1.0.tar.gz"
