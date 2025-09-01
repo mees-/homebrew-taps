@@ -19,24 +19,24 @@ class ConfettiWebsocket < Formula
     end
     
     # Create the plist file for launchd
-    plist_path = prefix/"homebrew.mxcl.confetti-websocket.plist"
-    plist_path.write plist_content
+    plist_path = File.join(prefix, "homebrew.mxcl.confetti-websocket.plist")
+    File.write(plist_path, plist_content)
     
     # Install the plist to the user's LaunchAgents directory
-    user_plist_path = Dir.home/"Library/LaunchAgents/homebrew.mxcl.confetti-websocket.plist"
-    user_plist_path.write plist_content
+    user_plist_path = File.join(Dir.home, "Library", "LaunchAgents", "homebrew.mxcl.confetti-websocket.plist")
+    File.write(user_plist_path, plist_content)
     
     # Set proper permissions
     system "chmod", "644", user_plist_path.to_s
     
     # Create config directory
-    config_dir = Dir.home/".config/confetti-websocket"
-    config_dir.mkpath
+    config_dir = File.join(Dir.home, ".config", "confetti-websocket")
+    FileUtils.mkdir_p(config_dir)
     
     # Create default config if it doesn't exist
-    config_file = config_dir/"config.json"
-    unless config_file.exist?
-      config_file.write <<~JSON
+    config_file = File.join(config_dir, "config.json")
+    unless File.exist?(config_file)
+      File.write(config_file, <<~JSON)
         {
           "url": "ENTER_WEBSOCKET_URL_HERE"
         }
@@ -71,18 +71,18 @@ class ConfettiWebsocket < Formula
     system "brew", "services", "stop", "confetti-websocket"
     
     # Remove the plist from LaunchAgents
-    user_plist_path = Dir.home/"Library/LaunchAgents/homebrew.mxcl.confetti-websocket.plist"
-    user_plist_path.delete if user_plist_path.exist?
+    user_plist_path = File.join(Dir.home, "Library", "LaunchAgents", "homebrew.mxcl.confetti-websocket.plist")
+    File.delete(user_plist_path) if File.exist?(user_plist_path)
     
     # Remove the binary
     bin.delete "confetti-websocket"
   end
 
   service do
-    run [opt_bin/"confetti-websocket"]
+    run [File.join(opt_bin, "confetti-websocket")]
     keep_alive true
-    log_path var/"log/confetti-websocket.log"
-    error_log_path var/"log/confetti-websocket.log"
+    log_path File.join(var, "log", "confetti-websocket.log")
+    error_log_path File.join(var, "log", "confetti-websocket.log")
     working_dir Dir.home
     environment_variables PATH: "#{HOMEBREW_PREFIX}/bin:/usr/bin:/bin"
   end
@@ -99,16 +99,16 @@ class ConfettiWebsocket < Formula
           <string>homebrew.mxcl.confetti-websocket</string>
           <key>ProgramArguments</key>
           <array>
-              <string>#{opt_bin}/confetti-websocket</string>
+              <string>#{File.join(opt_bin, "confetti-websocket")}</string>
           </array>
           <key>RunAtLoad</key>
           <true/>
           <key>KeepAlive</key>
           <true/>
           <key>StandardOutPath</key>
-          <string>#{var}/log/confetti-websocket.log</string>
+          <string>#{File.join(var, "log", "confetti-websocket.log")}</string>
           <key>StandardErrorPath</key>
-          <string>#{var}/log/confetti-websocket.log</string>
+          <string>#{File.join(var, "log", "confetti-websocket.log")}</string>
           <key>WorkingDirectory</key>
           <string>#{Dir.home}</string>
           <key>EnvironmentVariables</key>
@@ -123,11 +123,11 @@ class ConfettiWebsocket < Formula
 
   test do
     # Test that the binary exists and is executable
-    assert_predicate bin/"confetti-websocket", :exist?
-    assert_predicate bin/"confetti-websocket", :executable?
+    assert_predicate File.join(bin, "confetti-websocket"), :exist?
+    assert_predicate File.join(bin, "confetti-websocket"), :executable?
     
     # Test help output
-    output = shell_output("#{bin}/confetti-websocket --help", 0)
+    output = shell_output("#{File.join(bin, "confetti-websocket")} --help", 0)
     assert_match "Usage:", output
   end
 end
