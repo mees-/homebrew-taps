@@ -8,7 +8,7 @@ class ConfettiWebsocket < Formula
 
   # Use the source code repository
   url "https://github.com/mees-/confetti-webhook/archive/refs/tags/client-v0.1.2.tar.gz"
-  sha256 "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
+  sha256 "87da2c10ffb34c93627a79664949a4c4b87f7eee2c62392e06c71070c3d9e769"
 
   def install
     # Build from source
