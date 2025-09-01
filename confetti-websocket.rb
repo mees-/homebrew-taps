@@ -7,8 +7,8 @@ class ConfettiWebsocket < Formula
   depends_on "oven-sh/bun/bun"
 
   # Use the source code repository
-  url "https://github.com/mees-/confetti-webhook/archive/refs/tags/v0.1.1.tar.gz"
-  sha256 "11b769691574caf06cacd79c2375e10a3cbc26ec7b2f5e1e9ae00e77f20e82a4"
+  url "https://github.com/mees-/confetti-webhook/archive/refs/tags/client-v0.1.2.tar.gz"
+  sha256 "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
 
   def install
     # Build from source
@@ -45,10 +45,6 @@ class ConfettiWebsocket < Formula
     puts
     puts "To check service status:"
     puts "  brew services list | grep confetti-websocket"
-    puts
-    puts "IMPORTANT: You need to grant accessibility permissions in:"
-    puts "  System Preferences > Security & Privacy > Privacy > Accessibility"
-    puts "  Add the confetti-websocket binary and enable it."
     puts
     puts "Configuration file location:"
     puts "  ~/.config/confetti-websocket/config.json"
