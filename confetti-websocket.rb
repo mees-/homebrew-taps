@@ -7,8 +7,8 @@ class ConfettiWebsocket < Formula
   depends_on "oven-sh/bun/bun"
 
   # Use the source code repository
-  url "https://github.com/mees-/confetti-webhook/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "5f1726f6657dcb74fa5d86d51768571a5c5b716036af460944c62ad25f7d6239"
+  url "https://github.com/mees-/confetti-webhook/archive/refs/tags/v0.1.1.tar.gz"
+  sha256 "11b769691574caf06cacd79c2375e10a3cbc26ec7b2f5e1e9ae00e77f20e82a4"
 
   def install
     # Build from source
