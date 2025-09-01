@@ -17,18 +17,10 @@ class ConfettiWebsocket < Formula
       system "bun", "run", "release"
       bin.install "dist/confetti-websocket"
     end
-    
-    # Create the plist file for launchd
-    plist_path = File.join(prefix, "homebrew.mxcl.confetti-websocket.plist")
-    File.write(plist_path, plist_content)
-    
-    # Install the plist to the user's LaunchAgents directory
-    user_plist_path = File.join(Dir.home, "Library", "LaunchAgents", "homebrew.mxcl.confetti-websocket.plist")
-    File.write(user_plist_path, plist_content)
-    
-    # Set proper permissions
-    system "chmod", "644", user_plist_path.to_s
-    
+
+  end
+
+  def post_install
     # Create config directory
     config_dir = File.join(Dir.home, ".config", "confetti-websocket")
     FileUtils.mkdir_p(config_dir)
@@ -42,9 +34,7 @@ class ConfettiWebsocket < Formula
         }
       JSON
     end
-  end
-
-  def post_install
+    
     ohai "Confetti WebSocket client has been installed!"
     puts
     puts "To start the service:"
@@ -70,10 +60,6 @@ class ConfettiWebsocket < Formula
     # Stop the service if it's running
     system "brew", "services", "stop", "confetti-websocket"
     
-    # Remove the plist from LaunchAgents
-    user_plist_path = File.join(Dir.home, "Library", "LaunchAgents", "homebrew.mxcl.confetti-websocket.plist")
-    File.delete(user_plist_path) if File.exist?(user_plist_path)
-    
     # Remove the binary
     bin.delete "confetti-websocket"
   end
@@ -85,40 +71,6 @@ class ConfettiWebsocket < Formula
     error_log_path File.join(var, "log", "confetti-websocket.log")
     working_dir Dir.home
     environment_variables PATH: "#{HOMEBREW_PREFIX}/bin:/usr/bin:/bin"
-  end
-
-  private
-
-  def plist_content
-    <<~XML
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-      <dict>
-          <key>Label</key>
-          <string>homebrew.mxcl.confetti-websocket</string>
-          <key>ProgramArguments</key>
-          <array>
-              <string>#{File.join(opt_bin, "confetti-websocket")}</string>
-          </array>
-          <key>RunAtLoad</key>
-          <true/>
-          <key>KeepAlive</key>
-          <true/>
-          <key>StandardOutPath</key>
-          <string>#{File.join(var, "log", "confetti-websocket.log")}</string>
-          <key>StandardErrorPath</key>
-          <string>#{File.join(var, "log", "confetti-websocket.log")}</string>
-          <key>WorkingDirectory</key>
-          <string>#{Dir.home}</string>
-          <key>EnvironmentVariables</key>
-          <dict>
-              <key>PATH</key>
-              <string>#{HOMEBREW_PREFIX}/bin:/usr/bin:/bin</string>
-          </dict>
-      </dict>
-      </plist>
-    XML
   end
 
   test do
