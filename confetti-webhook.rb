@@ -1,14 +1,14 @@
 class ConfettiWebsocket < Formula
   desc "Confetti WebSocket client that runs as a background daemon"
   homepage "https://github.com/mees-/confetti-webhook"
-  version "0.0.1"
+  version "0.0.2"
   license "MIT"
 
   depends_on "bun"
 
   # Use the source code repository
   url "https://github.com/mees-/confetti-webhook/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "REPLACE_WITH_ACTUAL_SHA256"
+  sha256 "5f1726f6657dcb74fa5d86d51768571a5c5b716036af460944c62ad25f7d6239"
 
   def install
     # Build from source
