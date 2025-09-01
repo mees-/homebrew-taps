@@ -1,7 +1,7 @@
 class ConfettiWebsocket < Formula
   desc "Confetti WebSocket client that runs as a background daemon"
   homepage "https://github.com/mees-/confetti-webhook"
-  version "0.0.2"
+  version "0.1.2"
   license "MIT"
 
   depends_on "oven-sh/bun/bun"
