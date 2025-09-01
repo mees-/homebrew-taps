@@ -62,6 +62,7 @@ class ConfettiWebsocket < Formula
     
     # Remove the binary
     bin.delete "confetti-websocket"
+    FileUtils.rm_rf(File.join(Dir.home, ".config", "confetti-websocket"))
   end
 
   service do
